@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Resultados</h2>
+<form name="form1" method="post">
+    <div class="control-group">
+        <div class="controls"> 
+            <p>La suma es: {{suma}}</p>
+            <p>El numero mayor es: {{mayor}}</p>
+            <p>El numero menor es: {{menor}}</p>
+            <p>El promedio es: {{promedio}}</p>
+            <p>Numero -- repetidos</p>
+            {%for element in numerosRepetidos %} 
+
+            <p> {{element}}-----------> {{numerosRepetidos[element]}} veces</p> 
+
+
+            {%endfor%}  
+                
+            
+        </div>
+    </div>
+
+
+    
+</form>
+
+{% endblock %}
