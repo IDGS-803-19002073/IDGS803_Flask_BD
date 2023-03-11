@@ -53,17 +53,29 @@ def modificar():
 
     return render_template('modificar.html',form=create_forms)
 
-@app.route("/eliminar",methods=['GET'])
+@app.route("/eliminar",methods=['GET','POST'])
 def eliminar():
+    create_forms=forms.UseForm(request.form)
     if request.method=='GET':
         id=request.args.get('id')
         alumn1= db.session.query(Alumnos).filter(Alumnos.id==id).first()
-        db.session.delete(alumn1)
+        create_forms.id.data=alumn1.id
+        create_forms.nombre.data= alumn1.nombre
+        create_forms.apellidos.data= alumn1.apellidos
+        create_forms.email.data= alumn1.email
+
+    if request.method=='POST':
+        id=create_forms.id.data
+        alumn= db.session.query(Alumnos).filter(Alumnos.id==id).first()
+        alumn.id=create_forms.id.data
+        alumn.nombre=create_forms.nombre.data
+        alumn.apellidos=create_forms.apellidos.data
+        alumn.email=create_forms.email.data
+        db.session.delete(alumn)
         db.session.commit()
         return redirect(url_for('ABCompleto'))
-        
 
-    #return render_template('eliminar.html',form=create_forms)
+    return render_template('eliminar.html',form=create_forms)
 
 if __name__=='__main__':
     csrf.init_app(app)
